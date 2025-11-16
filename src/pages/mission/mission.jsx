@@ -3,7 +3,6 @@ import Image from "next/image";
 export default function Home() {
 const videos = [
 "fvFuGq-1Z8M",
-"82InbtYxdJY",
 "7u9JDhwJXTc", 
 "ZtLlfdyDySY",     
 "pLnGByBsFqE",  
@@ -18,6 +17,7 @@ const videos = [
 "iB6gWXG8zwo",
 "H4BXkyj9dJE",
 "yHFfpqgHld4",
+"82InbtYxdJY",
 "HWmqLXP1-o0"
   ];
 return (
