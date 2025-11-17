@@ -4,6 +4,7 @@ import Image from "next/image";
 export default function Home() {
   const videos = [
     "bXTo2cNtGPY",
+    "80xvq31DYbk",
     "hTb9x0SvuLg"
   ];
 
