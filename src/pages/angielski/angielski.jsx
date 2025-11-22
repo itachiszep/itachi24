@@ -14,6 +14,8 @@ export default function Home() {
         {/* Obraz */}
         {/* Iframy jedno pod drugim */}
         <div className="w-full flex flex-col items-center gap-3 sm:gap-4 md:gap-5 lg:gap-6 max-w-xs sm:max-w-sm md:max-w-2xl lg:max-w-4xl">
+                        <img src="/images/czasyangielski.png"/>
+
           {videos.map((videoId, index) => (
             <div 
               key={index}
