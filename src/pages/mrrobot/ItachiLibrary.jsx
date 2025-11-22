@@ -41,7 +41,7 @@ export default function ItachiLibrary() {
         {/* Tytuł biblioteki */}
         <h1 className="relative z-10 text-3xl md:text-5xl lg:text-6xl font-bold text-center mb-4 px-4">
           <span className="bg-gradient-to-r from-red-500 via-red-600 to-red-700 bg-clip-text text-transparent">
-            Itachi Uchiha
+            Itachi Uchiha edit
           </span>
         </h1>
  
