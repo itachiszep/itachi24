@@ -3,6 +3,46 @@
 import React, { useState, useEffect } from 'react';
 import { Trash2, Plus, ArrowLeft } from 'lucide-react';
 
+// Funkcja kompresji obrazu
+const compressImage = (file, maxWidth = 1200, quality = 0.8) => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+
+        // Skalowanie proporcjonalne
+        if (width > maxWidth) {
+          height = (height * maxWidth) / width;
+          width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // Kompresja do JPEG
+        const compressedBase64 = canvas.toDataURL('image/jpeg', quality);
+        
+        // Log rozmiaru
+        const sizeKB = (compressedBase64.length * 0.75) / 1024;
+        console.log(`✅ Skompresowane do: ${sizeKB.toFixed(2)}KB`);
+        
+        resolve(compressedBase64);
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+};
+
 export default function Blog() {
   const [posts, setPosts] = useState([]);
   const [view, setView] = useState('home');
@@ -19,14 +59,27 @@ export default function Blog() {
     fetchPosts();
   }, []);
 
-  const handleImageChange = (e) => {
+  // NOWA funkcja handleImageChange z kompresją
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData({ ...formData, image: reader.result, imagePreview: reader.result });
-      };
-      reader.readAsDataURL(file);
+      try {
+        // Log oryginalnego rozmiaru
+        const originalSizeKB = file.size / 1024;
+        console.log(`📷 Oryginalny plik: ${originalSizeKB.toFixed(2)}KB`);
+        
+        // Kompresja obrazu
+        const compressed = await compressImage(file, 1200, 0.8);
+        
+        setFormData({ 
+          ...formData, 
+          image: compressed, 
+          imagePreview: compressed 
+        });
+      } catch (error) {
+        console.error('❌ Błąd kompresji:', error);
+        alert('Błąd przetwarzania zdjęcia');
+      }
     }
   };
 
